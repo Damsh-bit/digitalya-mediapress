@@ -5,8 +5,8 @@ export default function DashboardPage() {
   return (
     <>
       <TopBar
-        title="Dashboard"
-        description="Select a tool to get started with media processing."
+        title="Panel Principal"
+        description="Selecciona una herramienta para comenzar con el procesamiento de medios."
       />
       <div className="flex-1 p-6 lg:p-8">
         <DashboardTools />

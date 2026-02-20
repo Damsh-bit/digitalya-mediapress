@@ -11,16 +11,16 @@ export function FileQueue() {
 
   if (queue.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-12">
+      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-10">
         <p className="text-sm text-muted-foreground">
-          No files in queue. Drop images above to get started.
+          No hay archivos en la cola. Arrastra imagenes arriba para comenzar.
         </p>
       </div>
     );
   }
 
   return (
-    <ScrollArea className="h-[400px] rounded-xl border border-border">
+    <ScrollArea className="h-[360px] rounded-lg border border-border">
       <div className="flex flex-col gap-2 p-3">
         {queue.map((entry) => (
           <FileQueueRow

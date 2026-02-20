@@ -18,36 +18,40 @@ interface FileQueueRowProps {
   onDownload: (entry: FileEntry) => void;
 }
 
-export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps) {
+export function FileQueueRow({
+  entry,
+  onRemove,
+  onDownload,
+}: FileQueueRowProps) {
   const statusConfig = {
     pending: {
-      label: "Pending",
+      label: "Pendiente",
       className: "bg-muted text-muted-foreground",
     },
     processing: {
-      label: "Processing",
-      className: "bg-primary/20 text-primary animate-pulse",
+      label: "Procesando",
+      className: "bg-primary/10 text-primary animate-pulse",
     },
     done: {
-      label: "Done",
-      className: "bg-success/20 text-success",
+      label: "Listo",
+      className: "bg-emerald-50 text-emerald-700",
     },
     error: {
       label: "Error",
-      className: "bg-destructive/20 text-destructive",
+      className: "bg-red-50 text-red-700",
     },
   };
 
   const { label, className: statusClass } = statusConfig[entry.status];
 
   return (
-    <div className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-2.5 transition-colors hover:bg-secondary/50">
+    <div className="group flex items-center gap-3 rounded-lg border border-border px-3 py-2.5 transition-colors hover:bg-muted/50">
       {/* Thumbnail */}
-      <div className="size-10 shrink-0 overflow-hidden rounded-md bg-secondary">
+      <div className="size-9 shrink-0 overflow-hidden rounded-md bg-muted">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={entry.previewUrl}
-          alt={`Preview of ${entry.name}`}
+          alt={`Vista previa de ${entry.name}`}
           className="size-full object-cover"
         />
       </div>
@@ -60,7 +64,7 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
         <div className="flex flex-wrap items-center gap-1.5">
           <Badge
             variant="secondary"
-            className="bg-muted text-muted-foreground text-[10px] px-1.5 py-0"
+            className="text-[10px] px-1.5 py-0"
           >
             {entry.format}
           </Badge>
@@ -78,8 +82,8 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
                   className={cn(
                     "text-xs font-medium",
                     entry.compressionRatio > 0
-                      ? "text-[#22c55e]"
-                      : "text-destructive"
+                      ? "text-emerald-600"
+                      : "text-red-600"
                   )}
                 >
                   {entry.compressionRatio > 0 ? "-" : "+"}
@@ -89,7 +93,7 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
             </>
           )}
           {entry.status === "error" && entry.error && (
-            <span className="text-xs text-destructive truncate max-w-[200px]">
+            <span className="text-xs text-red-600 truncate max-w-[200px]">
               {entry.error}
             </span>
           )}
@@ -111,7 +115,7 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
             variant="ghost"
             size="icon-sm"
             onClick={() => onDownload(entry)}
-            aria-label={`Download ${entry.name}`}
+            aria-label={`Descargar ${entry.name}`}
             className="text-muted-foreground hover:text-foreground"
           >
             <Download className="size-4" />
@@ -121,7 +125,7 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
           variant="ghost"
           size="icon-sm"
           onClick={() => onRemove(entry.id)}
-          aria-label={`Remove ${entry.name}`}
+          aria-label={`Eliminar ${entry.name}`}
           className="text-muted-foreground hover:text-destructive"
         >
           <X className="size-4" />

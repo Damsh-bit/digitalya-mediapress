@@ -18,46 +18,47 @@ export function BatchControls() {
         <Button
           onClick={compressAll}
           disabled={!hasPendingFiles || isProcessing}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          size="sm"
         >
           {isProcessing ? (
             <>
               <Loader2 className="size-4 animate-spin" />
-              Processing...
+              Procesando...
             </>
           ) : (
             <>
               <Play className="size-4" />
-              Compress All
+              Comprimir Todo
             </>
           )}
         </Button>
 
         <Button
           variant="outline"
+          size="sm"
           onClick={() => downloadAllAsZip(queue)}
           disabled={doneCount === 0}
-          className="border-border text-foreground"
         >
           <Download className="size-4" />
-          Download ZIP
+          Descargar ZIP
         </Button>
 
         <Button
           variant="outline"
+          size="sm"
           onClick={clearQueue}
           disabled={totalCount === 0 || isProcessing}
-          className="border-border text-foreground"
         >
           <Trash2 className="size-4" />
-          Clear All
+          Limpiar
         </Button>
       </div>
 
       {totalCount > 0 && (
         <p className="text-xs text-muted-foreground">
-          {totalCount} {totalCount === 1 ? "file" : "files"} &middot;{" "}
-          {pendingCount} ready &middot; {doneCount} done
+          {totalCount} {totalCount === 1 ? "archivo" : "archivos"} &middot;{" "}
+          {pendingCount} {pendingCount === 1 ? "listo" : "listos"} &middot;{" "}
+          {doneCount} {doneCount === 1 ? "completado" : "completados"}
         </p>
       )}
     </div>

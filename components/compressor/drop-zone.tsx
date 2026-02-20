@@ -36,18 +36,18 @@ export function DropZone({ onDrop }: DropZoneProps) {
     <div
       {...getRootProps()}
       className={cn(
-        "flex min-h-[160px] cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-8 transition-all duration-200",
+        "flex min-h-[140px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 transition-all duration-200",
         isDragActive
-          ? "border-primary bg-primary/5 shadow-[0_0_20px_rgba(59,130,246,0.15)]"
-          : "border-border hover:border-muted-foreground/50"
+          ? "border-primary bg-primary/5"
+          : "border-border hover:border-primary/40 hover:bg-muted/30"
       )}
       role="button"
       tabIndex={0}
-      aria-label="Drop zone for image files"
+      aria-label="Zona para soltar archivos de imagen"
     >
       <Upload
         className={cn(
-          "size-10 transition-colors",
+          "size-8 transition-colors",
           isDragActive ? "text-primary" : "text-muted-foreground"
         )}
       />
@@ -58,10 +58,10 @@ export function DropZone({ onDrop }: DropZoneProps) {
             isDragActive ? "text-primary" : "text-foreground"
           )}
         >
-          Drop your images here or click to browse
+          Arrastra tus imagenes aqui o haz clic para buscar
         </p>
-        <p className="mt-1.5 text-xs text-muted-foreground">
-          Accepts JPEG, PNG, GIF, BMP, TIFF, AVIF, WebP
+        <p className="mt-1 text-xs text-muted-foreground">
+          Acepta JPEG, PNG, GIF, BMP, TIFF, AVIF, WebP
         </p>
       </div>
       <input {...getInputProps()} />

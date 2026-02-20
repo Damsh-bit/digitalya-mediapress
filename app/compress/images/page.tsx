@@ -5,10 +5,10 @@ export default function ImageCompressorPage() {
   return (
     <>
       <TopBar
-        title="Image Compressor"
-        description="Compress and convert images to optimized WebP format."
+        title="Compresor de Imagenes"
+        description="Comprime y convierte imagenes a formato WebP optimizado."
       />
-      <div className="flex-1 p-6 lg:p-8">
+      <div className="flex-1 p-5 lg:p-6">
         <ImageCompressor />
       </div>
     </>

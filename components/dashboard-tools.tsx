@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ImageDown, Video } from "lucide-react";
+import { ImageDown, Video, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -17,40 +17,49 @@ function ToolCard({ title, description, icon, status, href }: ToolCardProps) {
   const content = (
     <div
       className={cn(
-        "group relative flex flex-col gap-4 rounded-xl border border-border bg-card p-6 transition-all duration-300",
+        "group relative flex flex-col gap-4 rounded-lg border p-6 transition-all duration-200",
         isAvailable
-          ? "cursor-pointer hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
-          : "cursor-not-allowed opacity-50"
+          ? "border-border bg-card cursor-pointer hover:border-primary/40 hover:shadow-sm"
+          : "border-dashed border-border bg-muted/30 cursor-not-allowed opacity-60"
       )}
     >
       <div className="flex items-start justify-between">
         <div
           className={cn(
-            "flex size-12 items-center justify-center rounded-lg",
-            isAvailable ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
+            "flex size-10 items-center justify-center rounded-lg",
+            isAvailable
+              ? "bg-primary/10 text-primary"
+              : "bg-muted text-muted-foreground"
           )}
         >
           {icon}
         </div>
         <Badge
-          variant={isAvailable ? "default" : "secondary"}
+          variant="secondary"
           className={cn(
+            "text-[11px]",
             isAvailable
-              ? "bg-success text-success-foreground"
-              : "bg-warning/20 text-warning border-warning/30"
+              ? "bg-primary/10 text-primary"
+              : "bg-muted text-muted-foreground"
           )}
         >
-          {isAvailable ? "Available" : "Coming Soon"}
+          {isAvailable ? "Disponible" : "Proximamente"}
         </Badge>
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-card-foreground text-balance">
+        <h3 className="text-base font-semibold text-card-foreground text-balance">
           {title}
         </h3>
         <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
           {description}
         </p>
       </div>
+      {isAvailable && (
+        <div className="flex items-center gap-1 text-sm font-medium text-primary">
+          Comenzar
+          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+        </div>
+      )}
     </div>
   );
 
@@ -63,18 +72,18 @@ function ToolCard({ title, description, icon, status, href }: ToolCardProps) {
 
 export function DashboardTools() {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <ToolCard
-        title="Image Compressor"
-        description="Batch compress and convert images to optimized WebP format with adjustable quality settings."
-        icon={<ImageDown className="size-6" />}
+        title="Compresor de Imagenes"
+        description="Comprime y convierte imagenes por lotes a formato WebP optimizado con ajustes de calidad personalizables."
+        icon={<ImageDown className="size-5" />}
         status="available"
         href="/compress/images"
       />
       <ToolCard
-        title="Video Compressor"
-        description="Compress video files while maintaining visual quality. Supports multiple output formats."
-        icon={<Video className="size-6" />}
+        title="Compresor de Video"
+        description="Comprime archivos de video manteniendo la calidad visual. Soporta multiples formatos de salida."
+        icon={<Video className="size-5" />}
         status="coming-soon"
       />
     </div>

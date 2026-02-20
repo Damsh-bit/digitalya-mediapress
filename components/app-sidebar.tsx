@@ -21,12 +21,12 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Dashboard",
+    label: "Panel Principal",
     href: "/",
     icon: <LayoutDashboard className="size-5" />,
   },
   {
-    label: "Image Compressor",
+    label: "Compresor de Imagenes",
     href: "/compress/images",
     icon: <ImageDown className="size-5" />,
   },
@@ -41,7 +41,7 @@ export function AppSidebar() {
       {/* Mobile header */}
       <header className="lg:hidden flex items-center justify-between border-b border-border bg-background px-4 py-3">
         <div className="flex items-center gap-2">
-          <DigitalYaLogo iconSize={24} className="text-sm" />
+          <DigitalYaLogo iconSize={22} className="text-xs" />
         </div>
         <Button
           variant="ghost"
@@ -70,13 +70,13 @@ export function AppSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-border bg-background transition-transform duration-300 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-border bg-sidebar transition-transform duration-300 lg:static lg:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         {/* Logo */}
-        <div className="flex items-center border-b border-border px-5 py-5">
-          <DigitalYaLogo iconSize={28} className="text-base" />
+        <div className="flex items-center border-b border-border px-5 py-4">
+          <DigitalYaLogo iconSize={26} className="text-sm" />
         </div>
 
         {/* Nav */}
