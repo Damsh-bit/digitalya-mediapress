@@ -77,12 +77,12 @@ export function FileQueueRow({ entry, onRemove, onDownload }: FileQueueRowProps)
                 <span
                   className={cn(
                     "text-xs font-medium",
-                    entry.compressionRatio >= 0
-                      ? "text-success"
+                    entry.compressionRatio > 0
+                      ? "text-[#22c55e]"
                       : "text-destructive"
                   )}
                 >
-                  {entry.compressionRatio >= 0 ? "-" : "+"}
+                  {entry.compressionRatio > 0 ? "-" : "+"}
                   {Math.abs(entry.compressionRatio)}%
                 </span>
               )}

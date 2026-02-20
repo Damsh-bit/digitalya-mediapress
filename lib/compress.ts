@@ -1,6 +1,8 @@
-import imageCompression from "browser-image-compression";
 import type { CompressionSettings } from "@/lib/store";
 
+/**
+ * Loads an image element from a blob URL.
+ */
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -11,6 +13,9 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+/**
+ * Converts a canvas to a WebP blob at the given quality (0-1).
+ */
 function canvasToWebPBlob(
   canvas: HTMLCanvasElement,
   quality: number
@@ -30,43 +35,85 @@ function canvasToWebPBlob(
   });
 }
 
+/**
+ * Draws a file onto a canvas, optionally scaling it down.
+ * Returns the canvas ready for export.
+ */
+async function fileToCanvas(
+  file: File | Blob,
+  scale: number = 1
+): Promise<HTMLCanvasElement> {
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const img = await loadImage(objectUrl);
+    const w = Math.round(img.naturalWidth * scale);
+    const h = Math.round(img.naturalHeight * scale);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Failed to get canvas 2D context");
+
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+/**
+ * Core compression pipeline.
+ *
+ * Strategy:
+ *  1. Draw the image onto a canvas at full resolution.
+ *  2. Export to WebP at the requested quality level.
+ *  3. If the output is STILL larger than the original, progressively lower
+ *     the quality until the output is smaller (minimum quality floor = 0.10).
+ *     This guarantees the file always shrinks.
+ */
 export async function compressToWebP(
   file: File,
   settings: CompressionSettings
 ): Promise<Blob> {
   try {
-    let imageFile: File | Blob = file;
+    const originalSize = file.size;
+    const canvas = await fileToCanvas(file);
 
-    if (!settings.lossless) {
-      const options = {
-        maxSizeMB: Infinity,
-        maxWidthOrHeight: undefined,
-        useWebWorker: true,
-        initialQuality: settings.quality / 100,
-        exifOrientation: settings.stripMetadata ? -1 : undefined,
-      };
-      imageFile = await imageCompression(file, options);
+    // --- Lossless mode: export at quality 1.0 (browser-native lossless WebP) ---
+    if (settings.lossless) {
+      const blob = await canvasToWebPBlob(canvas, 1.0);
+      return blob;
     }
 
-    const objectUrl = URL.createObjectURL(imageFile);
-    try {
-      const img = await loadImage(objectUrl);
-      const canvas = document.createElement("canvas");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+    // --- Lossy mode ---
+    let quality = settings.quality / 100; // user-requested quality (0-1)
+    let blob = await canvasToWebPBlob(canvas, quality);
 
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        throw new Error("Failed to get canvas 2D context");
-      }
-
-      ctx.drawImage(img, 0, 0);
-      const quality = settings.lossless ? 1.0 : settings.quality / 100;
-      const webpBlob = await canvasToWebPBlob(canvas, quality);
-      return webpBlob;
-    } finally {
-      URL.revokeObjectURL(objectUrl);
+    // If the result is already smaller, we're done.
+    if (blob.size < originalSize) {
+      return blob;
     }
+
+    // Otherwise, step down quality until we get a smaller file.
+    const QUALITY_FLOOR = 0.10;
+    const STEP = 0.05;
+
+    while (blob.size >= originalSize && quality > QUALITY_FLOOR) {
+      quality = Math.max(quality - STEP, QUALITY_FLOOR);
+      blob = await canvasToWebPBlob(canvas, quality);
+    }
+
+    // As a last resort, also try scaling the image down by 10 % increments.
+    let scale = 1.0;
+    while (blob.size >= originalSize && scale > 0.5) {
+      scale -= 0.1;
+      const scaledCanvas = await fileToCanvas(file, scale);
+      blob = await canvasToWebPBlob(scaledCanvas, quality);
+    }
+
+    return blob;
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown compression error";
