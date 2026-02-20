@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { DigitalYaLogo } from "@/components/digitalya-logo";
 
 interface NavItem {
   label: string;
@@ -41,17 +41,7 @@ export function AppSidebar() {
       {/* Mobile header */}
       <header className="lg:hidden flex items-center justify-between border-b border-border bg-background px-4 py-3">
         <div className="flex items-center gap-2">
-          <Image
-            src="/images/digitalya-logo.png"
-            alt="DigitalYa"
-            width={120}
-            height={32}
-            className="h-8 w-auto"
-            priority
-          />
-          <span className="text-sm font-bold text-foreground font-sans">
-            Mediapress
-          </span>
+          <DigitalYaLogo iconSize={24} className="text-sm" />
         </div>
         <Button
           variant="ghost"
@@ -85,18 +75,8 @@ export function AppSidebar() {
         )}
       >
         {/* Logo */}
-        <div className="flex items-center gap-2.5 border-b border-border px-5 py-5">
-          <Image
-            src="/images/digitalya-logo.png"
-            alt="DigitalYa"
-            width={140}
-            height={36}
-            className="h-9 w-auto"
-            priority
-          />
-          <span className="text-base font-bold text-foreground font-sans tracking-tight">
-            Mediapress
-          </span>
+        <div className="flex items-center border-b border-border px-5 py-5">
+          <DigitalYaLogo iconSize={28} className="text-base" />
         </div>
 
         {/* Nav */}

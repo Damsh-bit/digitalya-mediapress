@@ -16,7 +16,7 @@ export function ImageCompressor() {
 
       {/* Settings + Batch Controls */}
       <div className="flex flex-col gap-6 lg:flex-row">
-        <div className="lg:w-80 shrink-0">
+        <div className="lg:w-96 shrink-0">
           <SettingsPanel />
         </div>
         <div className="flex flex-1 flex-col justify-end">
