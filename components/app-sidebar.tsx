@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +9,6 @@ import {
   ImageDown,
   Menu,
   X,
-  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -41,9 +41,16 @@ export function AppSidebar() {
       {/* Mobile header */}
       <header className="lg:hidden flex items-center justify-between border-b border-border bg-background px-4 py-3">
         <div className="flex items-center gap-2">
-          <Layers className="size-6 text-primary" />
-          <span className="text-lg font-bold text-foreground font-sans">
-            MediaPress
+          <Image
+            src="/images/digitalya-logo.png"
+            alt="DigitalYa"
+            width={120}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
+          <span className="text-sm font-bold text-foreground font-sans">
+            Mediapress
           </span>
         </div>
         <Button
@@ -79,9 +86,16 @@ export function AppSidebar() {
       >
         {/* Logo */}
         <div className="flex items-center gap-2.5 border-b border-border px-5 py-5">
-          <Layers className="size-7 text-primary" />
-          <span className="text-xl font-bold text-foreground font-sans tracking-tight">
-            MediaPress
+          <Image
+            src="/images/digitalya-logo.png"
+            alt="DigitalYa"
+            width={140}
+            height={36}
+            className="h-9 w-auto"
+            priority
+          />
+          <span className="text-base font-bold text-foreground font-sans tracking-tight">
+            Mediapress
           </span>
         </div>
 
@@ -113,9 +127,10 @@ export function AppSidebar() {
 
         {/* Footer */}
         <div className="border-t border-border px-5 py-4">
-          <p className="text-xs text-muted-foreground">
-            MediaPress v1.0.0
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Hecho por Damian Coronel para @DigitalYa
           </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">V1.0.0</p>
         </div>
       </aside>
     </>

@@ -50,7 +50,7 @@ export function useDownload() {
     }
 
     const zipBlob = await zip.generateAsync({ type: "blob" });
-    triggerDownload(zipBlob, "mediapress-export.zip");
+    triggerDownload(zipBlob, "digitalya-mediapress-export.zip");
   }, []);
 
   return {

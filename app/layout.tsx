@@ -8,9 +8,9 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MediaPress — Batch Media Processing",
+  title: "DigitalYa Mediapress — Batch Media Processing",
   description:
-    "A centralized dashboard for batch image compression and media processing. Convert images to WebP with adjustable quality settings.",
+    "DigitalYa Mediapress: A centralized dashboard for batch image compression and media processing. Convert images to WebP with adjustable quality settings.",
   generator: "v0.app",
   icons: {
     icon: [
