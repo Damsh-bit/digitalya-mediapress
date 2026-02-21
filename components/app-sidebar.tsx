@@ -108,11 +108,17 @@ export function AppSidebar() {
         {/* Footer */}
         <div className="border-t border-border px-5 py-4">
           <p className="text-xs text-muted-foreground leading-relaxed">
+            Todas las funcionalidades en esta aplicación son experimentales, aún está en desarrollo. Se aprecia el feedback. :)
+          </p>
+
+        </div>
+        <div className="border-t border-border px-5 py-4">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             Hecho por Damian Coronel para @DigitalYa
           </p>
           <p className="mt-0.5 text-xs text-muted-foreground">V1.0.0</p>
         </div>
-      </aside>
+      </aside >
     </>
   );
 }
