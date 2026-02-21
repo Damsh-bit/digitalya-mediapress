@@ -19,6 +19,7 @@ export function BatchControls() {
           onClick={compressAll}
           disabled={!hasPendingFiles || isProcessing}
           size="sm"
+          className="cursor-pointer"
         >
           {isProcessing ? (
             <>
@@ -38,6 +39,7 @@ export function BatchControls() {
           size="sm"
           onClick={() => downloadAllAsZip(queue)}
           disabled={doneCount === 0}
+          className="cursor-pointer"
         >
           <Download className="size-4" />
           Descargar ZIP
@@ -48,6 +50,7 @@ export function BatchControls() {
           size="sm"
           onClick={clearQueue}
           disabled={totalCount === 0 || isProcessing}
+          className="cursor-pointer"
         >
           <Trash2 className="size-4" />
           Limpiar
